@@ -10,8 +10,17 @@ class ImdbSpiderSpider(scrapy.Spider):
         items = ImdbItem()
 
         movie_title = response.css(".lister-item-header > a:first-of-type::text").extract()
+        movie_type= response.css(".genre::text").extract()
+        movie_year = response.css(".unbold:nth-child(3)::text").extract()
+        movie_cert = response.css(".ratings-imdb-rating strong::text").extract()
+        movie_dur = response.css(".runtime::text").extract()
 
         items['name'] = movie_title
+        items['type'] = movie_type
+        items['year'] = movie_year
+        items['cert'] = movie_cert/2
+        items['dur'] = movie_dur
+        
 
         yield items
 
